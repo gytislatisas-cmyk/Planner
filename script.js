@@ -1,4 +1,7 @@
 const STORAGE_KEY = 'habits';
+const THEME_KEY = 'theme';
+
+const themeToggle = document.getElementById('theme-toggle');
 
 const form = document.getElementById('habit-form');
 const input = document.getElementById('habit-input');
@@ -90,5 +93,16 @@ function handleSubmit(event) {
   input.focus();
 }
 
+// Switches dark mode on or off, updates the button label, and saves the choice.
+function setDarkMode(enabled) {
+  document.body.classList.toggle('dark', enabled);
+  themeToggle.textContent = enabled ? 'Light mode' : 'Dark mode';
+  localStorage.setItem(THEME_KEY, enabled ? 'dark' : 'light');
+}
+
 form.addEventListener('submit', handleSubmit);
+themeToggle.addEventListener('click', () => {
+  setDarkMode(!document.body.classList.contains('dark'));
+});
+setDarkMode(localStorage.getItem(THEME_KEY) === 'dark');
 render();
